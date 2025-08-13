@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Aliftzy Module × Adam Music Player</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      background-color: black;
+      color: white;
+      text-align: center;
+      min-height: 100vh;
+    }
+    .background-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+    .container { width: 100%; padding-bottom: 120px; }
+    .profile-video {
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-top: 80px;
+      border: 5px solid #FFD700;
+    }
+    .main-title {
+      font-size: 48px;
+      color: #FFD700;
+      margin: 24px 0;
+      font-weight: bold;
+    }
+    .player-box {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 30px;
+      width: 100%;
+    }
+    .track-card {
+      background: rgba(255,255,255,0.08);
+      border: 2px solid #FFD700;
+      border-radius: 16px;
+      padding: 20px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      font-size: 20px;
+      color: #00BFFF;
+      font-weight: bold;
+    }
+    .track-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 14px rgba(255,255,255,0.3);
+    }
+    .control-buttons {
+      margin-top: 30px;
+    }
+    .toggle-button {
+      font-size: 20px;
+      padding: 14px 36px;
+      background-color: transparent;
+      border: 2px solid #FFD700;
+      border-radius: 12px;
+      color: #FFD700;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .toggle-button:hover {
+      background-color: #FFD700;
+      color: black;
+    }
+    .typing-message {
+      width: 90%;
+      max-width: 900px;
+      margin: 40px auto;
+      font-size: 18px;
+      color: white;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid white;
+      animation: typing 14s steps(150, end) forwards, blink 0.9s step-end infinite;
+      display: none;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      background: transparent;
+      color: #FFD700;
+    }
+    .footer h2 {
+      margin: 16px 0;
+      font-size: 28px;
+      opacity: 0.9;
+    }
+    @media (max-width: 768px) {
+      .profile-video {
+        width: 220px;
+        height: 220px;
+        margin-top: 40px;
+      }
+      .main-title { font-size: 32px; }
+      .track-card { font-size: 18px; }
+      .toggle-button { font-size: 18px; padding: 12px 24px; }
+      .footer h2 { font-size: 20px; }
+      .typing-message { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <video class="background-video" autoplay muted loop>
+    <source src="https://files.catbox.moe/3pgux4.mp4" type="video/mp4">
+  </video>
+
+  <div class="container">
+    <video class="profile-video" autoplay muted loop>
+      <source src="https://file.garden/aJzMAjrHVB4BLKPo/NEW%20POST%20%F0%9F%94%A5%20BREWOG%20AUDIO%20KARNAFAL%20SIDOMULYO%20BATU%20(ANIMASI%20SOUND%20SISTEM%20BREWOG)%20brewogaudio.mp4" type="video/mp4">
+    </video>
+
+    <div class="main-title">Aliftzy Module × Adam Music Player</div>
+
+    <div class="player-box">
+      <div class="track-card" onclick="playTrack(1)">Dj Andalan Brewog - Team 4</div>
+      <div class="track-card" onclick="playTrack(2)">Dj Velocity × Barudak Phonk</div>
+      <div class="track-card" onclick="playTrack(3)">Dj Thank You - Protons Music</div>
+      <div class="track-card" onclick="playTrack(4)">Dj In The Floor × Takutu</div>
+      <div class="track-card" onclick="playTrack(5)">Dj Paradise - X One Project</div>
+      <div class="track-card" onclick="playTrack(6)">Dj Skyfall - Middle Nulup</div>
+      <div class="track-card" onclick="playTrack(7)">Dj Bukit Berbunga - Style Karnaval</div>
+      <div class="track-card" onclick="playTrack(8)">Dj Pepas - Bangsay Offc</div>
+      <div class="track-card" onclick="playTrack(9)">Dj Gulu Pedot - Style Karnaval</div>
+      <div class="track-card" onclick="playTrack(10)">Dj Mashup - Style Karnaval</div>
+    </div>
+
+    <div class="control-buttons">
+      <button class="toggle-button" onclick="stopAll()" id="toggleBtn">⏹️ Stop</button>
+    </div>
+
+    <div class="typing-message" id="message">
+      Haloo Sayangggg👋🏻, Gimanaa sudaaa dengerin lagu nyaa? 🤔, asal kamuu tauuu🫣, di lagu itu semua menggambarkan😶‍🌫, betapa hampa dan perih nya aku kehilangan kamuu😓😓, di setiap lagu itu juga aku simpen nama kamu🥳🥳, biar akuu ingettt bagaimana bahagia nyaa kita di saat bersama hhe🤩🤩, Kamuuu jangann pergiii yaaa cantikkk🙁🙁, akuu sayanggg kamuu🫂🫂, I Love You araa🤍🤍
+    </div>
+  </div>
+
+  <div class="footer"><h2>©Aliftzy × Adam</h2></div>
+
+  <!-- Audio Elements -->
+  <audio id="track1" src="https://file.garden/aJzMAjrHVB4BLKPo/JINGLE%20BREWOG%20TIM%204%20%E2%80%A2%20THE%20DOCTOR%20TJAP%20JOTOS%20-%20BASS%20BEDIL%20AK%2047.mp3"></audio>
+  <audio id="track2" src="https://file.garden/aJzMAjrHVB4BLKPo/DJ%20VELOCITY%20BARUDAK%20PHONK%20-%20STYLE%20ASEK%20ASEK%20MIDDLE%20NROTOK%20FHAMS%20REVOLUTION.mp3"></audio>
+  <audio id="track3" src="https://file.garden/aJzMAjrHVB4BLKPo/DJ%20THANK%20YOU%20MIDLE%20TOBRUT%20NULOP2%20YANG%20BANYAK%20ORANG%20DI%20CARI%20CARI%20FYP%20DI%20TIKTOK.mp3"></audio>
+  <audio id="track4" src="https://file.garden/aJzMAjrHVB4BLKPo/DJ%20MELODY%20DANCE%20FLOOR%20THAILAND%20X%20SAE%20SAE%20TAKUTU%20DJ%20DANCE%20VELOCITY%20VIRAL%20TIK%20TOK%20YANG%20KALIAN%20CARI!!.mp3"></audio>
+  <audio id="track5" src="https://file.garden/aJzMAjrHVB4BLKPo/DJ%20PARADISE%20X%20ONE%20PROJECT%20YANG%20LAGI%20VIRAL%20SEDUNIA%E2%80%BC%EF%B8%8F.mp3"></audio>
+  <audio id="track6" src="https://file.garden/aJzMAjrHVB4BLKPo/DJ%20BEDIL%20AK%2047%20SKYFALL%20mp%20audio%20x%2069%20project.mp3"></audio>
+  <audio id="track7" src="https://file.garden/aJzMAjrHVB4BLKPo/DJ%20BUKIT%20BERBUNGA%20TJAP%20TASSO%E2%80%BC%EF%B8%8FSTYLE%20CETAS%20CETUS%20SPESIAL%2017%20AGUSTUS%F0%9F%87%AE%F0%9F%87%A9HARI%20KEMERDEKAAN%20VIRAL%20%E2%80%BC%EF%B8%8F.mp3"></audio>
+  <audio id="track8" src="https://file.garden/aJzMAjrHVB4BLKPo/PEPAS%20REMIX%20FYP%20TIKTOK%20BANGSAY%20FIKRI%20FUNDURACTION.mp3"></audio>
+  <audio id="track9" src="https://file.garden/aJzMAjrHVB4BLKPo/DJ%20GULU%20PEDOT%20FYP%20TIKTOK%20%E2%80%BC%EF%B8%8FASEK-ASEK%20PARTY%20KARNAVAL%20MCSB%20PRODUCTION.mp3"></audio>
+  <audio id="track10" src="https://file.garden/aJzMAjrHVB4BLKPo/DJ%20MASHUP%20VIRAL%202025!!%20STYLE%20PARTY%20KARNAVAL%20GAYENG%20ASEK%C2%B2BASS%20NGANTEM%20%E2%80%A2%20BS%20REVOLUTION%20%E2%80%A2.mp3"></audio>
+
+  <script>
+    function playTrack(n) {
+      for (let i = 1; i <= 10; i++) {
+        document.getElementById('track' + i).pause();
+        document.getElementById('track' + i).currentTime = 0;
+        document.querySelectorAll('.track-card')[i - 1].classList.remove('active-track');
+      }
+      document.getElementById('track' + n).play();
+      document.querySelectorAll('.track-card')[n - 1].classList.add('active-track');
+
+      const message = document.getElementById('message');
+      if (message.style.display === 'none') {
+        message.style.display = 'block';
+      }
+    }
+
+    function stopAll() {
+      for (let i = 1; i <= 10; i++) {
+        document.getElementById('track' + i).pause();
+        document.getElementById('track' + i).currentTime = 0;
+        document.querySelectorAll('.track-card')[i - 1].classList.remove('active-track');
+      }
+    }
+  </script>
+</body>
+</html>
